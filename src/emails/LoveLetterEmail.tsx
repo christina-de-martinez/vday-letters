@@ -21,6 +21,7 @@ interface LoveLetterEmailProps {
   meaning: string;
   signOff: string;
   senderName: string;
+  unsubscribeUrl: string;
 }
 
 export function LoveLetterEmail({
@@ -30,6 +31,7 @@ export function LoveLetterEmail({
   meaning,
   signOff,
   senderName,
+  unsubscribeUrl,
 }: LoveLetterEmailProps) {
   return (
     <Html lang="en">
@@ -214,10 +216,10 @@ export function LoveLetterEmail({
                 This is a one-time love letter sent to you by someone who cares
                 about you via{" "}
                 <Link
-                  href="https://sillysoftware.club"
+                  href="https://ilysm.email"
                   style={{ color: "#be8a8a", textDecoration: "none" }}
                 >
-                  Silly Software
+                  ilysm.email
                 </Link>
                 . You won&apos;t receive any further emails unless someone sends
                 you another letter.
@@ -231,12 +233,13 @@ export function LoveLetterEmail({
                 }}
               >
                 <Link
-                  href="mailto:hi@sillysoftware.club?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20future%20love%20letters."
+                  href={unsubscribeUrl}
                   style={{ color: "#d4b4b4", textDecoration: "underline" }}
                 >
                   Unsubscribe from future letters
                 </Link>
-                {" | "}Silly Software, PO Box 7775, San Francisco, CA 94120
+                {" | "}ilysm.email, 2261 Market St #5039, San Francisco CA 94114
+                United States
               </Text>
             </Section>
           </Container>
@@ -256,4 +259,5 @@ LoveLetterEmail.PreviewProps = {
     "You make every ordinary moment feel extraordinary. I can't imagine my life without you in it.",
   signOff: "Forever yours,",
   senderName: "Jamie",
+  unsubscribeUrl: "https://ilysm.email/unsubscribe",
 } satisfies LoveLetterEmailProps;

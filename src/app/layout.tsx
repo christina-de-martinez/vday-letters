@@ -23,13 +23,13 @@ export const metadata: Metadata = {
   title: "Send Your Valentine a Love Letter",
   description:
     "You don't need AI to write something from the heart. Write a personal love letter and send it to your Valentine.",
-  metadataBase: new URL("https://vday-letters.vercel.app"),
+  metadataBase: new URL("https://ilysm.email"),
   openGraph: {
     title: "Send Your Valentine a Love Letter",
     description:
       "You don't need AI to write something from the heart. Write a personal love letter and send it to your Valentine.",
     type: "website",
-    siteName: "Love Letter by Silly Software",
+    siteName: "ilysm.email",
   },
   twitter: {
     card: "summary_large_image",

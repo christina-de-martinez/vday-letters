@@ -12,11 +12,12 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send(
       {
-        from: "Love Letter <vday@newsletter.sillysoftware.club>",
+        from: "Love Letter <vday@ilysm.email>",
         to: [data.recipientEmail],
         subject: `A love letter for you, ${data.valentineName}`,
         headers: {
-          "List-Unsubscribe": `<mailto:hi@sillysoftware.club?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20future%20love%20letters.>`,
+          "List-Unsubscribe": "<{{{RESEND_UNSUBSCRIBE_URL}}}>",
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
         },
         react: LoveLetterEmail({
           valentineName: data.valentineName,
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
           meaning: data.meaning,
           signOff: data.signOff,
           senderName: data.senderName,
+          unsubscribeUrl: "{{{RESEND_UNSUBSCRIBE_URL}}}",
         }),
       },
       {
