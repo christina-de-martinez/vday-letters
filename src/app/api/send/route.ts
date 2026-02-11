@@ -15,10 +15,6 @@ export async function POST(request: Request) {
         from: "Someone you love <love@letter.ilysm.email>",
         to: [data.recipientEmail],
         subject: `A love letter for you, ${data.valentineName}`,
-        headers: {
-          "List-Unsubscribe": "<{{{RESEND_UNSUBSCRIBE_URL}}}>",
-          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
-        },
         react: LoveLetterEmail({
           valentineName: data.valentineName,
           loveAbout: data.loveAbout,
@@ -26,7 +22,6 @@ export async function POST(request: Request) {
           meaning: data.meaning,
           signOff: data.signOff,
           senderName: data.senderName,
-          unsubscribeUrl: "{{{RESEND_UNSUBSCRIBE_URL}}}",
         }),
       },
       {
@@ -36,7 +31,7 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Resend error:", error);
-      return Response.json({ error: "Failed to send email" }, { status: 500 });
+      return Response.json({ error: "Failed to send email", details: error }, { status: 500 });
     }
 
     return Response.json({ success: true });

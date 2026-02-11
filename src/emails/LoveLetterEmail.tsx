@@ -21,7 +21,6 @@ interface LoveLetterEmailProps {
   meaning: string;
   signOff: string;
   senderName: string;
-  unsubscribeUrl: string;
 }
 
 export function LoveLetterEmail({
@@ -31,7 +30,6 @@ export function LoveLetterEmail({
   meaning,
   signOff,
   senderName,
-  unsubscribeUrl,
 }: LoveLetterEmailProps) {
   return (
     <Html lang="en">
@@ -232,13 +230,7 @@ export function LoveLetterEmail({
                   margin: "0",
                 }}
               >
-                <Link
-                  href={unsubscribeUrl}
-                  style={{ color: "#d4b4b4", textDecoration: "underline" }}
-                >
-                  Unsubscribe from future letters
-                </Link>
-                {" | "}ilysm.email, 2261 Market St #5039, San Francisco CA 94114
+                ilysm.email, 2261 Market St #5039, San Francisco CA 94114
                 United States
               </Text>
             </Section>
@@ -259,5 +251,4 @@ LoveLetterEmail.PreviewProps = {
     "You make every ordinary moment feel extraordinary. I can't imagine my life without you in it.",
   signOff: "Forever yours,",
   senderName: "Jamie",
-  unsubscribeUrl: "https://ilysm.email/unsubscribe",
 } satisfies LoveLetterEmailProps;
