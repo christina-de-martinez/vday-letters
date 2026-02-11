@@ -42,7 +42,7 @@ export default function TypewriterText({
   }, [text, count, displayText, onComplete]);
 
   return (
-    <span className="font-script text-2xl text-rose-900 whitespace-pre-wrap leading-relaxed">
+    <span className="font-script text-2xl text-rose-900 whitespace-pre-wrap" style={{ lineHeight: "32px" }}>
       {currentText}
       {!done && (
         <motion.span

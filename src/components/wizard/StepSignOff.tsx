@@ -36,7 +36,7 @@ export default function StepSignOff() {
             key={option}
             type="button"
             onClick={() => setField("signOff", option)}
-            className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
+            className={`px-4 py-2 rounded-full text-sm font-sans transition-all cursor-pointer ${
               signOff === option
                 ? "bg-rose-400 text-white shadow-md"
                 : "bg-white/60 text-rose-600 border border-rose-200 hover:bg-rose-50"

@@ -8,6 +8,7 @@ export const sendLetterSchema = z.object({
   signOff: z.string().min(1).max(200),
   senderName: z.string().min(1).max(100),
   recipientEmail: z.string().email(),
+  idempotencyKey: z.string().length(64),
 });
 
 export type SendLetterInput = z.infer<typeof sendLetterSchema>;

@@ -10,22 +10,27 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = sendLetterSchema.parse(body);
 
-    const { error } = await resend.emails.send({
-      from: "Love Letter <vday@newsletter.sillysoftware.club>",
-      to: [data.recipientEmail],
-      subject: `A love letter for you, ${data.valentineName}`,
-      headers: {
-        "List-Unsubscribe": `<mailto:hi@sillysoftware.club?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20future%20love%20letters.>`,
+    const { error } = await resend.emails.send(
+      {
+        from: "Love Letter <vday@newsletter.sillysoftware.club>",
+        to: [data.recipientEmail],
+        subject: `A love letter for you, ${data.valentineName}`,
+        headers: {
+          "List-Unsubscribe": `<mailto:hi@sillysoftware.club?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20future%20love%20letters.>`,
+        },
+        react: LoveLetterEmail({
+          valentineName: data.valentineName,
+          loveAbout: data.loveAbout,
+          memory: data.memory,
+          meaning: data.meaning,
+          signOff: data.signOff,
+          senderName: data.senderName,
+        }),
       },
-      react: LoveLetterEmail({
-        valentineName: data.valentineName,
-        loveAbout: data.loveAbout,
-        memory: data.memory,
-        meaning: data.meaning,
-        signOff: data.signOff,
-        senderName: data.senderName,
-      }),
-    });
+      {
+        idempotencyKey: data.idempotencyKey,
+      }
+    );
 
     if (error) {
       console.error("Resend error:", error);

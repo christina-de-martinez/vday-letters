@@ -27,15 +27,15 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Lined paper effect for letter */
+/* Lined paper effect for letter — 32px line spacing */
 .lined-paper {
+  --line-height: 32px;
   background-image: repeating-linear-gradient(
     transparent,
-    transparent 31px,
-    #f5e1e1 31px,
-    #f5e1e1 32px
+    transparent calc(var(--line-height) - 1px),
+    #f5e1e1 calc(var(--line-height) - 1px),
+    #f5e1e1 var(--line-height)
   );
-  background-position-y: 8px;
 }
 
 /* Hide scrollbar on wizard cards */

@@ -41,7 +41,7 @@ export default function StepPreview() {
 
       <div className="mb-6 -mx-4 sm:-mx-6">
         <LetterPaper>
-          <div className="font-script text-2xl text-rose-900 whitespace-pre-wrap leading-relaxed">
+          <div className="font-script text-2xl text-rose-900 whitespace-pre-wrap" style={{ lineHeight: "32px" }}>
             {letterText}
           </div>
         </LetterPaper>
@@ -66,11 +66,9 @@ export default function StepPreview() {
               autoFocus
               className="font-sans"
             />
-            {emailError && (
-              <p className="text-red-500 text-xs font-sans mt-1.5 ml-1">
-                {emailError}
-              </p>
-            )}
+            <p className="text-red-500 text-xs font-sans mt-1.5 ml-1 min-h-[18px]">
+              {emailError ?? "\u00A0"}
+            </p>
           </div>
           <div className="flex items-center justify-between">
             <Button variant="ghost" onClick={() => setShowEmail(false)}>

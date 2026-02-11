@@ -7,6 +7,30 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  const instrumentSerif = await fetch(
+    "https://fonts.gstatic.com/s/instrumentserif/v4/jizBRFtNs2ka5fCjOQ3OCxRqoN6Lwqqh.woff2"
+  ).then((res) => res.arrayBuffer());
+
+  const dmSans = await fetch(
+    "https://fonts.gstatic.com/s/dmsans/v15/rP2Hp2ywxg089UriCZOIHTWEBlw.woff2"
+  ).then((res) => res.arrayBuffer());
+
+  // Scattered hearts at fixed positions (mimicking FloatingHearts)
+  const hearts = [
+    { top: 45, left: 80, size: 18, opacity: 0.1 },
+    { top: 90, left: 920, size: 14, opacity: 0.07 },
+    { top: 180, left: 160, size: 10, opacity: 0.08 },
+    { top: 140, left: 1050, size: 16, opacity: 0.06 },
+    { top: 400, left: 100, size: 12, opacity: 0.09 },
+    { top: 480, left: 1000, size: 20, opacity: 0.07 },
+    { top: 520, left: 300, size: 11, opacity: 0.06 },
+    { top: 350, left: 850, size: 13, opacity: 0.08 },
+    { top: 60, left: 550, size: 9, opacity: 0.05 },
+    { top: 500, left: 700, size: 15, opacity: 0.06 },
+    { top: 250, left: 50, size: 22, opacity: 0.05 },
+    { top: 300, left: 1100, size: 17, opacity: 0.07 },
+  ];
+
   return new ImageResponse(
     (
       <div
@@ -19,145 +43,110 @@ export default async function Image() {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          overflow: "hidden",
         }}
       >
-        {/* Scattered hearts background */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "280px",
-            opacity: 0.04,
-            color: "#be123c",
-          }}
-        >
-          ♥
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "60px",
-            left: "100px",
-            fontSize: "60px",
-            opacity: 0.08,
-            color: "#be123c",
-          }}
-        >
-          ♥
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "120px",
-            right: "140px",
-            fontSize: "40px",
-            opacity: 0.06,
-            color: "#be123c",
-          }}
-        >
-          ♥
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "80px",
-            left: "200px",
-            fontSize: "50px",
-            opacity: 0.07,
-            color: "#be123c",
-          }}
-        >
-          ♥
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "100px",
-            right: "180px",
-            fontSize: "35px",
-            opacity: 0.06,
-            color: "#be123c",
-          }}
-        >
-          ♥
-        </div>
+        {/* Floating hearts */}
+        {hearts.map((h, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              top: h.top,
+              left: h.left,
+              fontSize: `${h.size}px`,
+              opacity: h.opacity,
+              color: "#be123c",
+            }}
+          >
+            ♥
+          </div>
+        ))}
 
-        {/* Top accent bar */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "6px",
-            background: "#be123c",
-          }}
-        />
-
-        {/* Content */}
+        {/* Content — matches homepage layout */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "16px",
+            gap: "0px",
             position: "relative",
           }}
         >
-          <div style={{ fontSize: "72px", marginBottom: "8px" }}>💌</div>
+          {/* Heart icon */}
           <div
             style={{
               fontSize: "64px",
               color: "#881337",
-              fontFamily: "Georgia, serif",
-              fontWeight: 400,
-              textAlign: "center",
-              lineHeight: 1.2,
-              maxWidth: "800px",
+              marginBottom: "24px",
+              lineHeight: 1,
             }}
           >
-            Send Your Valentine
+            ♥
           </div>
+
+          {/* Title — Instrument Serif */}
           <div
             style={{
-              fontSize: "64px",
+              fontSize: "62px",
               color: "#881337",
-              fontFamily: "Georgia, serif",
+              fontFamily: "Instrument Serif",
               fontWeight: 400,
               textAlign: "center",
-              lineHeight: 1.2,
+              lineHeight: 1.15,
+              maxWidth: "900px",
             }}
           >
-            a Love Letter
+            Send Your Valentine a Love Letter
           </div>
+
+          {/* Subtitle — DM Sans */}
           <div
             style={{
               fontSize: "24px",
-              color: "#be8a8a",
-              fontFamily: "sans-serif",
-              marginTop: "12px",
+              color: "#fb7185",
+              fontFamily: "DM Sans",
+              marginTop: "20px",
+              textAlign: "center",
             }}
           >
             You don&apos;t need AI to write something from the heart.
           </div>
-        </div>
 
-        {/* Bottom accent bar */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "6px",
-            background: "#be123c",
-          }}
-        />
+          {/* Button */}
+          <div
+            style={{
+              marginTop: "40px",
+              background: "linear-gradient(to right, #be123c, #9f1239)",
+              color: "white",
+              fontFamily: "Instrument Serif",
+              fontSize: "24px",
+              padding: "16px 48px",
+              borderRadius: "9999px",
+              boxShadow: "0 4px 14px rgba(159, 18, 57, 0.3)",
+            }}
+          >
+            Begin
+          </div>
+        </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Instrument Serif",
+          data: instrumentSerif,
+          style: "normal",
+          weight: 400,
+        },
+        {
+          name: "DM Sans",
+          data: dmSans,
+          style: "normal",
+          weight: 400,
+        },
+      ],
+    }
   );
 }

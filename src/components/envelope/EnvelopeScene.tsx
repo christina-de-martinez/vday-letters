@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLetterStore } from "@/hooks/useLetterStore";
 import { composeLetter } from "@/lib/composeLetter";
@@ -10,20 +10,31 @@ import FloatingHearts from "@/components/background/FloatingHearts";
 
 type Phase = "typing" | "folding" | "sealing" | "flying" | "sent" | "error";
 
+async function generateIdempotencyKey(data: Record<string, string>) {
+  const raw = Object.values(data).join("|");
+  const encoded = new TextEncoder().encode(raw);
+  const hash = await crypto.subtle.digest("SHA-256", encoded);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 async function sendLetter() {
   const s = useLetterStore.getState();
+  const payload = {
+    valentineName: s.valentineName,
+    loveAbout: s.loveAbout,
+    memory: s.memory,
+    meaning: s.meaning,
+    signOff: s.signOff,
+    senderName: s.senderName,
+    recipientEmail: s.recipientEmail,
+  };
+  const idempotencyKey = await generateIdempotencyKey(payload);
   const res = await fetch("/api/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      valentineName: s.valentineName,
-      loveAbout: s.loveAbout,
-      memory: s.memory,
-      meaning: s.meaning,
-      signOff: s.signOff,
-      senderName: s.senderName,
-      recipientEmail: s.recipientEmail,
-    }),
+    body: JSON.stringify({ ...payload, idempotencyKey }),
   });
   if (!res.ok) throw new Error("Failed to send");
 }
@@ -273,8 +284,8 @@ function FoldingLetter({
       >
         <div className="lined-paper absolute inset-0" />
         <div
-          className="absolute left-0 right-0 px-10 py-8 font-script text-2xl text-rose-900 whitespace-pre-wrap leading-relaxed"
-          style={{ top: -thirdH }}
+          className="absolute left-0 right-0 px-10 font-script text-2xl text-rose-900 whitespace-pre-wrap"
+          style={{ top: -thirdH, lineHeight: "32px", paddingTop: "8px" }}
         >
           {letterText}
         </div>
@@ -304,8 +315,8 @@ function FoldingLetter({
         >
           <div className="lined-paper absolute inset-0" />
           <div
-            className="absolute left-0 right-0 px-10 py-8 font-script text-2xl text-rose-900 whitespace-pre-wrap leading-relaxed"
-            style={{ top: -thirdH * 2 }}
+            className="absolute left-0 right-0 px-10 font-script text-2xl text-rose-900 whitespace-pre-wrap"
+            style={{ top: -thirdH * 2, lineHeight: "32px", paddingTop: "8px" }}
           >
             {letterText}
           </div>
@@ -346,7 +357,7 @@ function FoldingLetter({
         >
           <div className="h-1.5 bg-gradient-to-r from-rose-300 via-pink-400 to-rose-300" />
           <div className="lined-paper absolute inset-0 top-1.5" />
-          <div className="absolute left-0 right-0 px-10 py-8 font-script text-2xl text-rose-900 whitespace-pre-wrap leading-relaxed">
+          <div className="absolute left-0 right-0 px-10 font-script text-2xl text-rose-900 whitespace-pre-wrap" style={{ lineHeight: "32px", paddingTop: "8px" }}>
             {letterText}
           </div>
         </div>
@@ -401,6 +412,7 @@ function FoldingLetter({
 export default function EnvelopeScene() {
   const [phase, setPhase] = useState<Phase>("typing");
   const [, setSendError] = useState(false);
+  const hasSentRef = useRef(false);
   const store = useLetterStore();
   const letterText = composeLetter(store);
 
@@ -494,11 +506,14 @@ export default function EnvelopeScene() {
                 times: [0, 0.25, 1],
               }}
               onAnimationComplete={async () => {
+                if (hasSentRef.current) return;
+                hasSentRef.current = true;
                 try {
                   await sendLetter();
                   store.setSent(true);
                   setPhase("sent");
                 } catch {
+                  hasSentRef.current = false;
                   setSendError(true);
                   setPhase("error");
                 }
@@ -535,7 +550,7 @@ export default function EnvelopeScene() {
             </p>
             <button
               onClick={handleWriteAnother}
-              className="font-serif text-rose-500 hover:text-rose-700 underline underline-offset-4 transition-colors"
+              className="font-serif text-rose-500 hover:text-rose-700 underline underline-offset-4 transition-colors cursor-pointer"
             >
               Write another letter
             </button>
@@ -557,7 +572,7 @@ export default function EnvelopeScene() {
             </p>
             <button
               onClick={handleRetry}
-              className="font-serif bg-gradient-to-r from-rose-700 to-rose-800 text-white px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-shadow"
+              className="font-serif bg-gradient-to-r from-rose-700 to-rose-800 text-white px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-shadow cursor-pointer"
             >
               Try Again
             </button>
