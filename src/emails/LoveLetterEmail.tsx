@@ -41,7 +41,6 @@ export function LoveLetterEmail({
               colors: {
                 cream: "#FFF8F0",
                 stationery: "#FFFDF7",
-                "rose-line": "#f5e1e1",
               },
             },
           },
@@ -61,11 +60,11 @@ export function LoveLetterEmail({
         <Body className="bg-cream font-sans m-0 py-10 px-0">
           <Container className="mx-auto max-w-xl">
             {/* Heart header */}
-            <Section className="text-center py-5">
+            <Section className="text-center pt-4 pb-6">
               <Text className="text-3xl leading-none m-0">&#9829;&#65039;</Text>
             </Section>
 
-            {/* Decorative rose-gold top border */}
+            {/* Top accent bar */}
             <table
               width="100%"
               cellPadding="0"
@@ -76,9 +75,8 @@ export function LoveLetterEmail({
                 <tr>
                   <td
                     style={{
-                      height: "6px",
-                      background:
-                        "linear-gradient(to right, #fda4af, #f472b6, #fda4af)",
+                      height: "4px",
+                      backgroundColor: "#be123c",
                       borderRadius: "4px 4px 0 0",
                     }}
                   />
@@ -86,27 +84,24 @@ export function LoveLetterEmail({
               </tbody>
             </table>
 
-            {/* Letter body — notebook paper look */}
+            {/* Letter body */}
             <Section
               style={{
                 backgroundColor: "#FFFDF7",
-                borderLeft: "1px solid rgba(253,164,175,0.3)",
-                borderRight: "1px solid rgba(253,164,175,0.3)",
-                borderBottom: "1px solid rgba(253,164,175,0.3)",
-                backgroundImage:
-                  "repeating-linear-gradient(transparent, transparent 31px, #f5e1e1 31px, #f5e1e1 32px)",
-                backgroundPositionY: "8px",
-                padding: "40px 36px 32px 36px",
+                borderLeft: "1px solid #fecdd3",
+                borderRight: "1px solid #fecdd3",
+                borderBottom: "1px solid #fecdd3",
+                borderStyle: "solid",
+                padding: "44px 40px 36px 40px",
               }}
             >
-              {/* Greeting */}
               <Heading
                 as="h1"
                 style={{
                   fontFamily: '"Instrument Serif", Georgia, serif',
                   fontSize: "28px",
-                  color: "#8B3A4A",
-                  marginBottom: "24px",
+                  color: "#881337",
+                  marginBottom: "28px",
                   fontWeight: 400,
                   marginTop: "0",
                 }}
@@ -118,9 +113,10 @@ export function LoveLetterEmail({
                 style={{
                   fontFamily: 'Georgia, "Times New Roman", serif',
                   fontSize: "16px",
-                  lineHeight: "1.8",
-                  color: "#5C2434",
-                  marginBottom: "16px",
+                  lineHeight: "28px",
+                  color: "#4a0d20",
+                  marginBottom: "20px",
+                  marginTop: "0",
                 }}
               >
                 {loveAbout}
@@ -129,9 +125,10 @@ export function LoveLetterEmail({
                 style={{
                   fontFamily: 'Georgia, "Times New Roman", serif',
                   fontSize: "16px",
-                  lineHeight: "1.8",
-                  color: "#5C2434",
-                  marginBottom: "16px",
+                  lineHeight: "28px",
+                  color: "#4a0d20",
+                  marginBottom: "20px",
+                  marginTop: "0",
                 }}
               >
                 {memory}
@@ -140,9 +137,10 @@ export function LoveLetterEmail({
                 style={{
                   fontFamily: 'Georgia, "Times New Roman", serif',
                   fontSize: "16px",
-                  lineHeight: "1.8",
-                  color: "#5C2434",
-                  marginBottom: "16px",
+                  lineHeight: "28px",
+                  color: "#4a0d20",
+                  marginBottom: "20px",
+                  marginTop: "0",
                 }}
               >
                 {meaning}
@@ -150,11 +148,11 @@ export function LoveLetterEmail({
 
               <Hr
                 style={{
-                  borderTop: "1px solid #f5e1e1",
+                  borderTop: "1px solid #fecdd3",
                   borderBottom: "none",
                   borderLeft: "none",
                   borderRight: "none",
-                  margin: "28px 0",
+                  margin: "32px 0",
                 }}
               />
 
@@ -162,9 +160,10 @@ export function LoveLetterEmail({
                 style={{
                   fontFamily: 'Georgia, "Times New Roman", serif',
                   fontSize: "16px",
-                  color: "#8B3A4A",
+                  color: "#881337",
                   fontStyle: "italic",
                   marginBottom: "4px",
+                  marginTop: "0",
                 }}
               >
                 {signOff}
@@ -172,8 +171,8 @@ export function LoveLetterEmail({
               <Text
                 style={{
                   fontFamily: '"Instrument Serif", Georgia, serif',
-                  fontSize: "20px",
-                  color: "#8B3A4A",
+                  fontSize: "22px",
+                  color: "#881337",
                   fontWeight: 400,
                   marginTop: "0",
                 }}
@@ -182,25 +181,58 @@ export function LoveLetterEmail({
               </Text>
             </Section>
 
+            {/* Bottom accent bar */}
+            <table
+              width="100%"
+              cellPadding="0"
+              cellSpacing="0"
+              role="presentation"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    style={{
+                      height: "4px",
+                      backgroundColor: "#be123c",
+                      borderRadius: "0 0 4px 4px",
+                    }}
+                  />
+                </tr>
+              </tbody>
+            </table>
+
             {/* Footer */}
-            <Section className="text-center pt-6 pb-4">
-              <Text className="text-xs m-0 mb-2" style={{ color: "#C4A0A0" }}>
+            <Section className="text-center pt-8 pb-4">
+              <Text
+                style={{
+                  fontSize: "12px",
+                  lineHeight: "18px",
+                  color: "#be8a8a",
+                  margin: "0 0 8px 0",
+                }}
+              >
                 This is a one-time love letter sent to you by someone who cares
                 about you via{" "}
                 <Link
                   href="https://sillysoftware.club"
-                  className="no-underline"
-                  style={{ color: "#C4A0A0" }}
+                  style={{ color: "#be8a8a", textDecoration: "none" }}
                 >
                   Silly Software
                 </Link>
                 . You won&apos;t receive any further emails unless someone sends
                 you another letter.
               </Text>
-              <Text className="text-xs m-0" style={{ color: "#D4B4B4" }}>
+              <Text
+                style={{
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  color: "#d4b4b4",
+                  margin: "0",
+                }}
+              >
                 <Link
                   href="mailto:hi@sillysoftware.club?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20future%20love%20letters."
-                  style={{ color: "#D4B4B4" }}
+                  style={{ color: "#d4b4b4", textDecoration: "underline" }}
                 >
                   Unsubscribe from future letters
                 </Link>
