@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send(
       {
-        from: "Love Letter <vday@ilysm.email>",
+        from: "Someone you love <love@letter.ilysm.email>",
         to: [data.recipientEmail],
         subject: `A love letter for you, ${data.valentineName}`,
         headers: {
